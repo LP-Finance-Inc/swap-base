@@ -1,34 +1,18 @@
 use anchor_lang::prelude::*;
-use anchor_lang::solana_program::system_program;
 
 use anchor_spl::{
     associated_token::AssociatedToken,
-    mint,
-    token::{self, SetAuthority, TokenAccount, Mint, Token, transfer, Transfer},
+    token::{TokenAccount, Mint, Token},
 };
 
 use anchor_lang::{solana_program, Result};
 use solana_program::{
-    instruction::{AccountMeta, Instruction},
-    // account_info::{next_account_info, AccountInfo },
-    // entrypoint::ProgramResult,
-    // msg,
     program::{invoke, invoke_signed},
-    // program_error::ProgramError,
-    // pubkey::Pubkey,
-    // sysvar::{rent::Rent, Sysvar},
-    // system_instruction, stake::instruction, program_pack::Pack,
 };
-use spl_token::instruction::AuthorityType;
 
 use std::f64;
 
-// use anchor_lang::solana_program::account_info::AccountInfo;
-// use anchor_lang::solana_program::pubkey::Pubkey;
-// use anchor_lang::solana_program::program;
-// pub use spl_associated_token_account::{get_associated_token_address, ID};
-
-declare_id!("BrxSF554tzDU6j1GNw4JyhHPV1XYmez1xfhGJTVkL8Vj");
+declare_id!("91UuzKJN9pGvpvPuMZmaRXvHbU8ND7y1ZdMj6rgiXcfS");
 
 #[program]
 pub mod swap_base {
