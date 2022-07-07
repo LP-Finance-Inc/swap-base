@@ -42,8 +42,8 @@ async function findAssociatedTokenAddress(
 
 const init_liquidity = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
-  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  // const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const creatorKeypair = getKeypair("creator");
 
@@ -111,6 +111,7 @@ const init_liquidity = async () => {
   list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
   list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
   list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "fee", "Value" : poolAccount.fee });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
   console.table(list);

@@ -24,6 +24,7 @@ pub mod swap_base {
         amount_b: u64,
         amp: u64, 
         min_lp_amount: u64,
+        fee: u8
     ) -> Result<()> {
         let pool: &mut Account<Pool> = &mut ctx.accounts.pool;
         let creator: &Signer = &ctx.accounts.creator;
@@ -48,6 +49,14 @@ pub mod swap_base {
         pool.amp = amp;
         pool.total_lp_amount = 0;
         pool.min_lp_amount = min_lp_amount;
+        if fee < 5{
+            pool.fee = 5;
+        }else if fee > 100 {
+            pool.fee = 100;
+        }else{
+            pool.fee = fee;
+        }
+
         pool.state = 1;
 
         //--------- LP Token Mint to Creator -----------------
@@ -580,7 +589,8 @@ pub mod swap_base {
             let c: f64 = -1.0 * d_f * d_f * d_f;
 
             let amount_b_f: f64 = (-1.0*b+(b*b-4.0*a*c).sqrt())/2.0/a;
-            let amount_return =pool.amount_b - amount_b_f as u64;
+            let amount_return_f =pool.amount_b as f64 - amount_b_f;
+            let amount_return = (amount_return_f * (100.0 - pool.fee as f64 / 10.0) / 100.0) as u64;
 
             pool.amount_a += amount_swap;
             pool.amount_b -= amount_return;
@@ -632,7 +642,8 @@ pub mod swap_base {
             let c: f64 = -1.0 * d_f * d_f * d_f;
 
             let amount_a_f: f64 = (-1.0*b+(b*b-4.0*a*c).sqrt())/2.0/a;
-            let amount_return =pool.amount_a - amount_a_f as u64;
+            let amount_return_f =pool.amount_a as f64 - amount_a_f;
+            let amount_return = (amount_return_f * (100.0 - pool.fee as f64 / 10.0) / 100.0) as u64;
 
             pool.amount_b += amount_swap;
             pool.amount_a -= amount_return;
@@ -687,6 +698,7 @@ pub mod swap_base {
     amount_b: u64,
     amp: u64, 
     min_lp_amount: u64,
+    fee: u8
 )]
 pub struct CreatePool<'info> {
     #[account(
@@ -935,6 +947,7 @@ pub struct Pool {
     pub total_lp_amount: u64,
     pub min_lp_amount: u64,
     pub state: u8,              // 1 - created & non init   2 - init liquidity   3 - init LP Token
+    pub fee: u8,                // real fee = (fee / 10) %
 }
 
 const DISCRIMINATOR_LENGTH: usize = 8;
@@ -957,7 +970,8 @@ impl Pool {
     + U64_LENGTH            // amp
     + U64_LENGTH            // total_lp_amount
     + U64_LENGTH            // min_lp_amount
-    + U8_LENGTH;            // pool state
+    + U8_LENGTH            // pool state
+    + U8_LENGTH;            // pool fee
 }
 
 #[error_code]

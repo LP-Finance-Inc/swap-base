@@ -16,8 +16,8 @@ const delete_pool = async () => {
     
   const creatorKeypair = getKeypair("creator");
 
-  const connection = new Connection("http://localhost:8899", "confirmed");
-  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  // const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   // console.log(provider)

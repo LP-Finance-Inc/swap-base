@@ -23,8 +23,8 @@ const get_pools = async () => {
     
   const creatorKeypair = getKeypair("creator");
 
-  const connection = new Connection("http://localhost:8899", "confirmed");
-  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  // const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   // console.log(provider)
@@ -48,6 +48,7 @@ const get_pools = async () => {
         "token2" : poolAccounts[i].account.tokenB.toBase58().substring(0,5) + '...',
         "amount2": poolAccounts[i].account.amountB.toNumber(),
         "amp": poolAccounts[i].account.amp.toNumber(),
+        "fee": poolAccounts[i].account.fee,
         "state": poolAccounts[i].account.state
     })
   }
