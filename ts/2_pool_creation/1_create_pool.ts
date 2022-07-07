@@ -14,36 +14,40 @@ import {
 
 import {
   getKeypair,
+  getCreatorKeypair,
   getPublicKey,
   writePublicKey,
   getProgramId
 } from "./utils";
+import { LpUSDMint, NETWORK, USDCMint } from "../config";
 
 const create_pool = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
 
-  const creatorKeypair = getKeypair("creator");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
   const poolKeypair = anchor.web3.Keypair.generate();
-  writePublicKey(poolKeypair.publicKey, `pool`);
+  writePublicKey(poolKeypair.publicKey, `pool`); 
   
-  const token_mint_a = await getPublicKey("mint_a");
-  const token_mint_b = await getPublicKey("mint_b");
+  const token_mint_a = LpUSDMint; // await getPublicKey("mint_a");
+  const token_mint_b = USDCMint; // await getPublicKey("mint_b");
 
   const token_mint_lp = anchor.web3.Keypair.generate();
+
+  console.log("Creator address:", creatorKeypair.publicKey.toBase58());
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
   const program = anchor.workspace.SwapBase as Program<SwapBase>;
 
-  const amp = 500;
+  const amp = 1000;
   const min_lp = 0;
 
   const token_acc_lp_Keypair = anchor.web3.Keypair.generate();
 
-  const amount_a = 1000000;
-  const amount_b = 1000000;
+  const amount_a = 100000000 // 1000000;
+  const amount_b = 100000000 // 1000000;
 
 
   await program.rpc.createPool( 
@@ -109,3 +113,31 @@ const create_pool = async () => {
 };
 
 create_pool();
+
+// 2022-07-06 Deployment
+
+// Creator address: AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD
+// 1.Create new Pool
+// 2.Create new LP Token of Creator
+// 3.Create new LP TokenAccount of Creator
+// 4.Mint LP Token to Creator
+// 5.Change LP Token Owner: Creator -> Pool PDA
+// 6.Change LP TokenAccount Owner: Creator -> Pool PDA
+// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
+// │ (index) │     Property      │                     Value                      │
+// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
+// │    0    │      'Pool'       │ '4sMLjhYZyPJvkDrxdXTAfWm2C9EFbkhK7VjKtniDpnkw' │
+// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
+// │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
+// │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
+// │    4    │    'LP token'     │ '5NMGQBUqQG8oXmXQziBVfenhvKXBwA5AGveHAMffYGsQ' │
+// │    5    │ 'A tokenAccount'  │       '11111111111111111111111111111111'       │
+// │    6    │ 'B tokenAccount'  │       '11111111111111111111111111111111'       │
+// │    7    │ 'LP tokenAccount' │ '8eyP5g1QqbmKv6Y9s9JMtYd1FWSHRKhT1hZFzKeTsvca' │
+// │    8    │    'Amount A'     │                   100000000                    │
+// │    9    │    'Amount B'     │                   100000000                    │
+// │   10    │       'Amp'       │                      1000                      │
+// │   11    │ 'total LP amount' │                       0                        │
+// │   12    │  'min LP amount'  │                       0                        │
+// │   13    │      'State'      │                       1                        │
+// └─────────┴───────────────────┴────────────────────────────────────────────────┘

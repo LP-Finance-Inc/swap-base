@@ -12,7 +12,7 @@ use solana_program::{
 
 use std::f64;
 
-declare_id!("91UuzKJN9pGvpvPuMZmaRXvHbU8ND7y1ZdMj6rgiXcfS");
+declare_id!("9ctuy1ovKd6Mk1ugjoh936CrNCbsfRs7UFJQM32MxYoq");
 
 #[program]
 pub mod swap_base {

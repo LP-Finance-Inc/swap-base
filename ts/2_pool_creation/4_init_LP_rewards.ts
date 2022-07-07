@@ -23,8 +23,10 @@ import {
   getKeypair,
   getPublicKey,
   writePublicKey,
-  getProgramId
+  getProgramId,
+  getCreatorKeypair
 } from "./utils";
+import { NETWORK } from "../config";
 
 async function findAssociatedTokenAddress(
   walletAddress: PublicKey,
@@ -42,10 +44,10 @@ async function findAssociatedTokenAddress(
 
 const init_LP_rewards = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
-  const creatorKeypair = getKeypair("creator");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
   
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
@@ -125,3 +127,29 @@ const init_LP_rewards = async () => {
 };
 
 init_LP_rewards();
+
+
+// 2022-0706 LpUSD-USDC devnet
+
+// ata creator LP: 67LRh1yyoM1Zj5TdZuAXjVcpTdrkF6PPXG83ZVYzNKcY
+// 1.Create new LP TokenAccount of Creator.
+// 2.Calc Amount of LP Token rewards
+// 3.Transfer LP Token rewards: Pool PDA -> Creator
+// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
+// │ (index) │     Property      │                     Value                      │
+// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
+// │    0    │      'Pool'       │ '4sMLjhYZyPJvkDrxdXTAfWm2C9EFbkhK7VjKtniDpnkw' │
+// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
+// │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
+// │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
+// │    4    │    'LP token'     │ '5NMGQBUqQG8oXmXQziBVfenhvKXBwA5AGveHAMffYGsQ' │
+// │    5    │ 'A tokenAccount'  │ 'FjCvFfYu4q9phZJd6FUbh9V9SHjvXGVViyfoY3W3fLK4' │
+// │    6    │ 'B tokenAccount'  │ '8dsGfyRDxy6BgJWsM15gFosjPwaSiLDzDusRCgWQjp7f' │
+// │    7    │ 'LP tokenAccount' │ '8eyP5g1QqbmKv6Y9s9JMtYd1FWSHRKhT1hZFzKeTsvca' │
+// │    8    │    'Amount A'     │                   100000000                    │
+// │    9    │    'Amount B'     │                   100000000                    │
+// │   10    │       'Amp'       │                      1000                      │
+// │   11    │ 'total LP amount' │                   100000000                    │
+// │   12    │  'min LP amount'  │                       0                        │
+// │   13    │      'State'      │                       4                        │
+// └─────────┴───────────────────┴────────────────────────────────────────────────┘

@@ -14,16 +14,18 @@ import {
 } from "@solana/web3.js";
 import BN = require("bn.js");
 import {
+  getCreatorKeypair,
   getKeypair,
   getProgramId,
   getPublicKey,
 } from "./utils";
+import { NETWORK } from "../config";
 
 const get_pools = async () => {
     
-  const creatorKeypair = getKeypair("creator");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);

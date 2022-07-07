@@ -16,15 +16,17 @@ import {
   getKeypair,
   getPublicKey,
   writePublicKey,
-  getProgramId
+  getProgramId,
+  getCreatorKeypair
 } from "./utils";
+import { NETWORK } from "../config";
 
 const create_accounts = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
-  const creatorKeypair = getKeypair("creator");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
@@ -97,3 +99,28 @@ const create_accounts = async () => {
 };
 
 create_accounts();
+
+// 2022-07-06 devnet
+
+// 1.Create A TokenAccount of Creator
+// 2.Create B TokenAccount of Creator
+// 3.Change A TokenAccount Owner: Creator->Pool PDA
+// 4.Change B TokenAccount Owner: Creator->Pool PDA
+// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
+// │ (index) │     Property      │                     Value                      │
+// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
+// │    0    │      'Pool'       │ '4sMLjhYZyPJvkDrxdXTAfWm2C9EFbkhK7VjKtniDpnkw' │
+// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
+// │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
+// │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
+// │    4    │    'LP token'     │ '5NMGQBUqQG8oXmXQziBVfenhvKXBwA5AGveHAMffYGsQ' │
+// │    5    │ 'A tokenAccount'  │ 'FjCvFfYu4q9phZJd6FUbh9V9SHjvXGVViyfoY3W3fLK4' │
+// │    6    │ 'B tokenAccount'  │ '8dsGfyRDxy6BgJWsM15gFosjPwaSiLDzDusRCgWQjp7f' │
+// │    7    │ 'LP tokenAccount' │ '8eyP5g1QqbmKv6Y9s9JMtYd1FWSHRKhT1hZFzKeTsvca' │
+// │    8    │    'Amount A'     │                   100000000                    │
+// │    9    │    'Amount B'     │                   100000000                    │
+// │   10    │       'Amp'       │                      1000                      │
+// │   11    │ 'total LP amount' │                       0                        │
+// │   12    │  'min LP amount'  │                       0                        │
+// │   13    │      'State'      │                       2                        │
+// └─────────┴───────────────────┴────────────────────────────────────────────────┘

@@ -25,6 +25,8 @@ import {
   writePublicKey,
   getProgramId
 } from "./utils";
+import { LpUSDMint, NETWORK, USDCMint } from "../config";
+import { getATAPublicKey, getCreatorKeypair } from "../2_pool_creation/utils";
 
 async function findAssociatedTokenAddress(
   walletAddress: PublicKey,
@@ -42,10 +44,10 @@ async function findAssociatedTokenAddress(
 
 const swap_pool = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
-  const userKeypair = getKeypair("user");
+  const userKeypair = getCreatorKeypair(); // getKeypair("user");
 
   const provider = new SignerWallet(userKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
@@ -54,10 +56,10 @@ const swap_pool = async () => {
   const pool_pubkey = await getPublicKey("pool");
   console.log("pool pubkey : ", pool_pubkey.toBase58());
 
-  const ata_user_a = await getPublicKey("ata_user_a");
+  const ata_user_a = await getATAPublicKey(LpUSDMint, userKeypair.publicKey) // await getPublicKey("ata_user_a");
   console.log("user_ata_a : ", ata_user_a.toBase58());
 
-  const ata_user_b = await getPublicKey("ata_user_b");
+  const ata_user_b = await getATAPublicKey(USDCMint, userKeypair.publicKey) // await getPublicKey("ata_user_b");
   console.log("user_ata_b : ", ata_user_b.toBase58());
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);

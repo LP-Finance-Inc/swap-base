@@ -2,7 +2,7 @@ solana-keygen new -o keys/creator.json --force
 
 solana config set --keypair keys/creator.json
 
-solana airdrop 100
+solana airdrop 2
 
 solana address
 solana balance
@@ -16,7 +16,7 @@ solana-keygen new -o keys/user.json --force
 
 solana config set --keypair keys/user.json
 
-solana airdrop 100
+solana airdrop 2
 
 solana address
 solana balance
