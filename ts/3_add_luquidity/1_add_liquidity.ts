@@ -25,6 +25,9 @@ import {
   writePublicKey,
   getProgramId
 } from "./utils";
+import { LpUSDMint, NETWORK, USDCMint } from "../config";
+import { getATAPublicKey, getCreatorKeypair } from "../2_pool_creation/utils";
+import { getWei } from "../utils";
 
 async function findAssociatedTokenAddress(
   walletAddress: PublicKey,
@@ -42,10 +45,10 @@ async function findAssociatedTokenAddress(
 
 const add_liquidity = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
-  const userKeypair = getKeypair("user");
+  const userKeypair = getCreatorKeypair(); // getKeypair("user");
 
   const provider = new SignerWallet(userKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
@@ -54,18 +57,19 @@ const add_liquidity = async () => {
   const pool_pubkey = await getPublicKey("pool");
   console.log("pool pubkey : ", pool_pubkey.toBase58());
 
-  const ata_user_a = await getPublicKey("ata_user_a");
+  const ata_user_a = await getATAPublicKey(LpUSDMint, userKeypair.publicKey) // await getPublicKey("ata_user_a");
   console.log("user_ata_a : ", ata_user_a.toBase58());
 
-  const ata_user_b = await getPublicKey("ata_user_b");
+  const ata_user_b = await getATAPublicKey(USDCMint, userKeypair.publicKey) // await getPublicKey("ata_user_b");
   console.log("user_ata_b : ", ata_user_b.toBase58());
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);
 
   const pool_amount_a = parseFloat(poolAccount.amountA.toString());
   const pool_amount_b = parseFloat(poolAccount.amountB.toString());
-  const amount_a = parseFloat("10000");
-  const amount_b = pool_amount_b/(pool_amount_a)* amount_a;
+
+  const amount_a = "99999998900000010";
+  const amount_b = "99999998900000010"; // pool_amount_b/(pool_amount_a)* amount_a;
   console.log("amount a:", amount_a);
   console.log("amount b:", amount_b);
 
@@ -133,11 +137,11 @@ const add_liquidity = async () => {
   list.push({ "Property" : "A tokenAccount", "Value" : poolAccount.tokenAccA.toBase58() });
   list.push({ "Property" : "B tokenAccount", "Value" : poolAccount.tokenAccB.toBase58() });
   list.push({ "Property" : "LP tokenAccount", "Value" : poolAccount.tokenAccLp.toBase58() });
-  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toNumber() });
-  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toNumber() });
-  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
-  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
-  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toString() });
+  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toString() });
+  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toString() });
+  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toString() });
+  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toString() });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
   console.table(list);
