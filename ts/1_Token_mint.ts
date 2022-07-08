@@ -15,6 +15,7 @@ import {
     getTokenBalance,
     writePublicKey,
   } from "./utils";
+import { NETWORK } from "./config";
   
   const createMint = (
     connection: Connection,
@@ -43,15 +44,11 @@ import {
     const userKeypair = getKeypair("user");
     console.log("user pubkey: ", userKeypair.publicKey.toBase58())
 
-    // const connection = new Connection("http://localhost:8899", "confirmed");
-    // console.log("Requesting SOL for Creator...");
-    // await connection.requestAirdrop(creatorKeypair.publicKey, LAMPORTS_PER_SOL * 100);
-    // console.log("100 SOL airDrop OK-----");
+    const connection = new Connection(NETWORK, "confirmed");
+    console.log("Requesting SOL for Creator...");
+    await connection.requestAirdrop(creatorKeypair.publicKey, LAMPORTS_PER_SOL * 2);
+    console.log("2 SOL airDrop OK-----");
   
-    const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-    // console.log("Requesting SOL for Creator...");
-    // await connection.requestAirdrop(creatorKeypair.publicKey, LAMPORTS_PER_SOL * 2);
-      
     console.log("---------------- Token Mint --------------------------")
 
     //----- token Mint -----------------------
@@ -143,7 +140,7 @@ import {
    ]);
    
    console.log("");
- 
+   
 
 };
     
