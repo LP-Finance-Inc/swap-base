@@ -25,13 +25,8 @@ const get_pools = async () => {
     
   const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
-<<<<<<< HEAD
   const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-=======
-  // const connection = new Connection("http://localhost:8899", "confirmed");
-  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
->>>>>>> 343e1b7f150eb27158efe7082d1b0fc38d06f32d
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   // console.log(provider)
