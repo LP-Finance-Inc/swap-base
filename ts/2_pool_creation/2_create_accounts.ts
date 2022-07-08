@@ -25,7 +25,6 @@ const create_accounts = async () => {
     
   const connection = new Connection(NETWORK, "confirmed");
   // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-
   const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
@@ -92,6 +91,7 @@ const create_accounts = async () => {
   list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
   list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
   list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "fee", "Value" : poolAccount.fee });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
   console.table(list);

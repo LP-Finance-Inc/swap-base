@@ -44,6 +44,7 @@ const create_pool = async () => {
   const program = anchor.workspace.SwapBase as Program<SwapBase>;
 
   const amp = 1000;
+  const fee = 5;   // real fee = (fee / 10) %
   const min_lp = 0;
 
   const token_acc_lp_Keypair = anchor.web3.Keypair.generate();
@@ -51,12 +52,12 @@ const create_pool = async () => {
   const amount_a = 1500000 * 1e9 // 1000000;
   const amount_b = 1500000 * 1e9// 1000000;
 
-
   await program.rpc.createPool( 
     new anchor.BN(amount_a), 
     new anchor.BN(amount_b), 
     new anchor.BN(amp), 
     new anchor.BN(min_lp),
+    fee,
     {
         accounts: {
             pool: poolKeypair.publicKey,
@@ -108,6 +109,7 @@ const create_pool = async () => {
   list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
   list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
   list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "fee", "Value" : poolAccount.fee });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
   console.table(list);
