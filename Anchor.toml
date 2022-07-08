@@ -2,17 +2,17 @@
 seeds = false
 
 [programs.localnet]
-swap_base = "91UuzKJN9pGvpvPuMZmaRXvHbU8ND7y1ZdMj6rgiXcfS"
+swap_base = "9ctuy1ovKd6Mk1ugjoh936CrNCbsfRs7UFJQM32MxYoq"
 
 [programs.devnet]
-stable_swap = "91UuzKJN9pGvpvPuMZmaRXvHbU8ND7y1ZdMj6rgiXcfS"
+stable_swap = "9ctuy1ovKd6Mk1ugjoh936CrNCbsfRs7UFJQM32MxYoq"
 
 [registry]
 url = "https://api.apr.dev"
 
 [provider]
 cluster = "https://api.devnet.solana.com"
-wallet = "/home/olaf45/.config/solana/id.json"
+wallet = "/Users/coredev0927/.config/solana/id.json"
 
 [scripts]
 test = "yarn run ts-mocha -p ./tsconfig.json -t 1000000 tests/**/*.ts"

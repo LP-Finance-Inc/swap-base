@@ -12,7 +12,7 @@ use solana_program::{
 
 use std::f64;
 
-declare_id!("91UuzKJN9pGvpvPuMZmaRXvHbU8ND7y1ZdMj6rgiXcfS");
+declare_id!("9ctuy1ovKd6Mk1ugjoh936CrNCbsfRs7UFJQM32MxYoq");
 
 #[program]
 pub mod swap_base {
@@ -347,6 +347,7 @@ pub mod swap_base {
         let pool_amount_b_f: f64 = pool.amount_b as f64;
         let add_amount_a_f: f64 = amount_a as f64;
         let add_amount_b_f: f64 = pool_amount_b_f / pool_amount_a_f * add_amount_a_f;
+        
         let amount_b = add_amount_b_f as u64;
 
         let lp_amount_a_f: f64 = amount_a as f64;

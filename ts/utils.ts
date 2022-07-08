@@ -83,3 +83,7 @@ export interface PoolLayout {
   initializerTempTokenAccountPubkey: Uint8Array;
   expectedAmount: Uint8Array;
 }
+
+export const getWei = (value) => {
+  return parseFloat(value) * 1e9;
+}

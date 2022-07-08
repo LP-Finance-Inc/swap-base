@@ -14,17 +14,19 @@ import {
 } from "@solana/web3.js";
 import BN = require("bn.js");
 import {
+  getCreatorKeypair,
   getKeypair,
   getProgramId,
   getPublicKey,
 } from "./utils";
+import { NETWORK } from "../config";
 
 const get_pools = async () => {
     
-  const creatorKeypair = getKeypair("creator");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
-  // const connection = new Connection("http://localhost:8899", "confirmed");
-  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  const connection = new Connection(NETWORK, "confirmed");
+  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   // console.log(provider)
@@ -44,10 +46,10 @@ const get_pools = async () => {
         "pubkey" : poolAccounts[i].publicKey.toBase58(),
         "creator": poolAccounts[i].account.creator.toBase58().substring(0,5) + '...',
         "token1" : poolAccounts[i].account.tokenA.toBase58().substring(0,5) + '...',
-        "amount1": poolAccounts[i].account.amountA.toNumber(),
+        "amount1": poolAccounts[i].account.amountA.toString(),
         "token2" : poolAccounts[i].account.tokenB.toBase58().substring(0,5) + '...',
-        "amount2": poolAccounts[i].account.amountB.toNumber(),
-        "amp": poolAccounts[i].account.amp.toNumber(),
+        "amount2": poolAccounts[i].account.amountB.toString(),
+        "amp": poolAccounts[i].account.amp.toString(),
         "fee": poolAccounts[i].account.fee,
         "state": poolAccounts[i].account.state
     })

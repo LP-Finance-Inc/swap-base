@@ -11,14 +11,14 @@ import {
   getKeypair,
   getPublicKey,
 } from "./utils";
+import { NETWORK } from "../config";
 
 const delete_pool = async () => {
     
   const creatorKeypair = getKeypair("creator");
 
-  // const connection = new Connection("http://localhost:8899", "confirmed");
-  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-
+  const connection = new Connection(NETWORK, "confirmed");
+  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   // console.log(provider)
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));

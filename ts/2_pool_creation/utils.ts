@@ -1,8 +1,10 @@
 import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { Token, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+
 import * as BufferLayout from "buffer-layout";
 
 import * as fs from "fs";
-
+import { ASSOCIATED_PROGRAM_ID } from "@project-serum/anchor/dist/cjs/utils/token";
 export const logError = (msg: string) => {
   console.log(`\x1b[31m${msg}\x1b[0m`);
 };
@@ -29,6 +31,24 @@ export const getKeypair = (name: string) =>
     publicKey: getPublicKey(name).toBytes(),
     secretKey: getPrivateKey(name),
   });
+
+export const getCreatorKeypair = () => {
+  const pk = Uint8Array.from(
+    JSON.parse(fs.readFileSync(`/Users/coredev0927/.config/solana/id.json`) as unknown as string)
+  );
+  const keypair = Keypair.fromSecretKey(pk);
+  return keypair;
+}
+
+export const getATAPublicKey = async (tokenMint: PublicKey, owner: PublicKey) => {
+  return await Token.getAssociatedTokenAddress(
+    ASSOCIATED_PROGRAM_ID,
+    TOKEN_PROGRAM_ID,
+    tokenMint,
+    owner,
+    true
+  )
+}
 
 export const getProgramId = () => {
   try {

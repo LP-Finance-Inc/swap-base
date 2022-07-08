@@ -147,5 +147,5 @@ import {
 
 };
     
-  setup();
+setup();
   

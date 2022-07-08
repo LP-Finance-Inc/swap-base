@@ -23,8 +23,11 @@ import {
   getKeypair,
   getPublicKey,
   writePublicKey,
-  getProgramId
+  getProgramId,
+  getCreatorKeypair,
+  getATAPublicKey
 } from "./utils";
+import { LpSOLMint, LpUSDMint, NETWORK, USDCMint, wSOLMint } from "../config";
 
 async function findAssociatedTokenAddress(
   walletAddress: PublicKey,
@@ -42,10 +45,9 @@ async function findAssociatedTokenAddress(
 
 const init_liquidity = async () => {
     
-  // const connection = new Connection("http://localhost:8899", "confirmed");
-  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
-
-  const creatorKeypair = getKeypair("creator");
+  const connection = new Connection(NETWORK, "confirmed");
+  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  const creatorKeypair = getCreatorKeypair(); // getKeypair("creator");
 
   const provider = new SignerWallet(creatorKeypair).createProvider(connection);
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
@@ -53,16 +55,18 @@ const init_liquidity = async () => {
 
   const pool_pubkey = await getPublicKey("pool");
 
-  const ata_creator_a = await getPublicKey("ata_creator_a");
+  // const ata_creator_a = await getATAPublicKey(LpUSDMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
+  const ata_creator_a = await getATAPublicKey(LpSOLMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
   console.log("creator_ata_a : ", ata_creator_a.toBase58());
 
-  const ata_creator_b = await getPublicKey("ata_creator_b");
+  // const ata_creator_b = await getATAPublicKey(USDCMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
+  const ata_creator_b = await getATAPublicKey(wSOLMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
   console.log("creator_ata_b : ", ata_creator_b.toBase58());
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);
 
-  const amount_a = 1000000;
-  const amount_b = 1000000;
+  const amount_a = 1500000 * 1e9 // 1000000;
+  const amount_b = 1500000 * 1e9 // 1000000;
 
   const creator_pubkey = poolAccount.creator;
   const token_acc_a = poolAccount.tokenAccA;
@@ -119,3 +123,54 @@ const init_liquidity = async () => {
 };
 
 init_liquidity();
+
+// 2022-07-06 devnet
+
+// creator_ata_a :  A9iZCZVCBPXT855c792AUp5VhTp2jX2kcmBH26LZnYJq
+// creator_ata_b :  J4NkF1qF8rkaxJsLkmuGbVh9dvJHBsAQAPSWGCd6nFio
+// 1.Transfer A Token: Creator -> Pool PDA
+// 2.Transfer B Token: Creator -> Pool PDA
+// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
+// │ (index) │     Property      │                     Value                      │
+// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
+// │    0    │      'Pool'       │ '4sMLjhYZyPJvkDrxdXTAfWm2C9EFbkhK7VjKtniDpnkw' │
+// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
+// │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
+// │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
+// │    4    │    'LP token'     │ '5NMGQBUqQG8oXmXQziBVfenhvKXBwA5AGveHAMffYGsQ' │
+// │    5    │ 'A tokenAccount'  │ 'FjCvFfYu4q9phZJd6FUbh9V9SHjvXGVViyfoY3W3fLK4' │
+// │    6    │ 'B tokenAccount'  │ '8dsGfyRDxy6BgJWsM15gFosjPwaSiLDzDusRCgWQjp7f' │
+// │    7    │ 'LP tokenAccount' │ '8eyP5g1QqbmKv6Y9s9JMtYd1FWSHRKhT1hZFzKeTsvca' │
+// │    8    │    'Amount A'     │                   100000000                    │
+// │    9    │    'Amount B'     │                   100000000                    │
+// │   10    │       'Amp'       │                      1000                      │
+// │   11    │ 'total LP amount' │                       0                        │
+// │   12    │  'min LP amount'  │                       0                        │
+// │   13    │      'State'      │                       3                        │
+// └─────────┴───────────────────┴────────────────────────────────────────────────┘
+
+
+// 2022-0708 devnet
+// LpSOL-wSOL
+// creator_ata_a :  EXKi1Bd7tJhGfwRqXTaVwdvBjrreL4uzJQBHQLtK98Xj
+// creator_ata_b :  8KVEhqLbeEzJEpqNbAMARWUC6fsn5eWKB41Fmubgtahw
+// 1.Transfer A Token: Creator -> Pool PDA
+// 2.Transfer B Token: Creator -> Pool PDA
+// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
+// │ (index) │     Property      │                     Value                      │
+// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
+// │    0    │      'Pool'       │ 'DLvHc3XKzjAH4JM4oDTtptgUma7nVi8cUcUrbBt1AU4f' │
+// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
+// │    2    │     'A token'     │ '5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ' │
+// │    3    │     'B token'     │ '6hPAQy93EbDzwHyU843zcWKATy8NrJ1ZsKCRi2JkuXcT' │
+// │    4    │    'LP token'     │ '8bceYP2jAbv6YaTgmiokaX4cqqPMXvXAbFBNgTV5YpLJ' │
+// │    5    │ 'A tokenAccount'  │ 'BSYUoSQDTWrixr4ZCp752e3gh1c6ibuzjEQcfZVGE8HV' │
+// │    6    │ 'B tokenAccount'  │ 'DFRHJM21LQXch4Z4tk8mRo82dVtAnxQzMAtToqWbuFD'  │
+// │    7    │ 'LP tokenAccount' │ 'F8uLRYWSJrg46F2wq16Wx3H15TFiKUP9JDVVJ2cn49fy' │
+// │    8    │    'Amount A'     │                1500000000000000                │
+// │    9    │    'Amount B'     │                1500000000000000                │
+// │   10    │       'Amp'       │                      1000                      │
+// │   11    │ 'total LP amount' │                       0                        │
+// │   12    │  'min LP amount'  │                       0                        │
+// │   13    │      'State'      │                       3                        │
+// └─────────┴───────────────────┴────────────────────────────────────────────────┘
