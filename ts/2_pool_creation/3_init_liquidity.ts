@@ -159,18 +159,19 @@ init_liquidity();
 // ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
 // │ (index) │     Property      │                     Value                      │
 // ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ 'DLvHc3XKzjAH4JM4oDTtptgUma7nVi8cUcUrbBt1AU4f' │
+// │    0    │      'Pool'       │ '3m7TjKocGtnMpM6SGwKjKZZ1QmbvsNv5jcMhrQGtYvnq' │
 // │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
 // │    2    │     'A token'     │ '5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ' │
 // │    3    │     'B token'     │ '6hPAQy93EbDzwHyU843zcWKATy8NrJ1ZsKCRi2JkuXcT' │
-// │    4    │    'LP token'     │ '8bceYP2jAbv6YaTgmiokaX4cqqPMXvXAbFBNgTV5YpLJ' │
-// │    5    │ 'A tokenAccount'  │ 'BSYUoSQDTWrixr4ZCp752e3gh1c6ibuzjEQcfZVGE8HV' │
-// │    6    │ 'B tokenAccount'  │ 'DFRHJM21LQXch4Z4tk8mRo82dVtAnxQzMAtToqWbuFD'  │
-// │    7    │ 'LP tokenAccount' │ 'F8uLRYWSJrg46F2wq16Wx3H15TFiKUP9JDVVJ2cn49fy' │
+// │    4    │    'LP token'     │ '2Um9ZWWvktEa5FcLrrzwv4soQgCjFiVJnx8kWB4gp1J9' │
+// │    5    │ 'A tokenAccount'  │ 'HRBFe1o6QN6m77vns8E9jrF2oqvAwFmm4BKvZ2yx44v1' │
+// │    6    │ 'B tokenAccount'  │ 'GXRNR9xfjzQ2MxwNBZpatnSxxA15CfXLX3HgHGsNtinz' │
+// │    7    │ 'LP tokenAccount' │ '3nankGqeMANshNGBXQfsQaTDmnViFVJyLz3W8GVE2W5h' │
 // │    8    │    'Amount A'     │                1500000000000000                │
 // │    9    │    'Amount B'     │                1500000000000000                │
 // │   10    │       'Amp'       │                      1000                      │
 // │   11    │ 'total LP amount' │                       0                        │
 // │   12    │  'min LP amount'  │                       0                        │
-// │   13    │      'State'      │                       3                        │
+// │   13    │       'fee'       │                       5                        │
+// │   14    │      'State'      │                       3                        │
 // └─────────┴───────────────────┴────────────────────────────────────────────────┘

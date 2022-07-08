@@ -25,7 +25,7 @@ import {
   writePublicKey,
   getProgramId
 } from "./utils";
-import { LpUSDMint, NETWORK, USDCMint } from "../config";
+import { LpSOLMint, LpUSDMint, NETWORK, USDCMint, wSOLMint } from "../config";
 import { getATAPublicKey, getCreatorKeypair } from "../2_pool_creation/utils";
 
 async function findAssociatedTokenAddress(
@@ -56,10 +56,12 @@ const swap_pool = async () => {
   const pool_pubkey = await getPublicKey("pool");
   console.log("pool pubkey : ", pool_pubkey.toBase58());
 
-  const ata_user_a = await getATAPublicKey(LpUSDMint, userKeypair.publicKey) // await getPublicKey("ata_user_a");
+  // const ata_user_a = await getATAPublicKey(LpUSDMint, userKeypair.publicKey) // await getPublicKey("ata_user_a");
+  const ata_user_a = await getATAPublicKey(LpSOLMint, userKeypair.publicKey) // await getPublicKey("ata_user_a");
   console.log("user_ata_a : ", ata_user_a.toBase58());
 
-  const ata_user_b = await getATAPublicKey(USDCMint, userKeypair.publicKey) // await getPublicKey("ata_user_b");
+  // const ata_user_b = await getATAPublicKey(USDCMint, userKeypair.publicKey) // await getPublicKey("ata_user_b");
+  const ata_user_b = await getATAPublicKey(wSOLMint, userKeypair.publicKey) // await getPublicKey("ata_user_b");
   console.log("user_ata_b : ", ata_user_b.toBase58());
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);
@@ -67,8 +69,8 @@ const swap_pool = async () => {
   const token_acc_a = poolAccount.tokenAccA;
   const token_acc_b = poolAccount.tokenAccB;
 
-  const amount_swap = 1000;
-  const token_swap = poolAccount.tokenA;
+  const amount_swap = 1500000;
+  const token_swap = poolAccount.tokenB;
 
   const swapProgramId = getProgramId();
   const PDA = await PublicKey.findProgramAddress(
@@ -76,8 +78,10 @@ const swap_pool = async () => {
     swapProgramId
   );
 
+  console.log("LpUSD -> USDC swap: amount => ", amount_swap)
+
   await program.rpc.swapPool( 
-    new anchor.BN(amount_swap), 
+    new anchor.BN(amount_swap * 1e9), 
     "swap-pool-pda",
     PDA[1],
     {

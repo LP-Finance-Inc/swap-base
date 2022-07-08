@@ -49,8 +49,10 @@ const create_pool = async () => {
 
   const token_acc_lp_Keypair = anchor.web3.Keypair.generate();
 
-  const amount_a = 1500000 * 1e9 // 1000000;
-  const amount_b = 1500000 * 1e9// 1000000;
+  // const amount_a = 1500000 * 1e9 // 1000000;
+  // const amount_b = 1500000 * 1e9// 1000000;
+  const amount_a = 100000000 * 1e9 // 1000000;
+  const amount_b = 100000000 * 1e9// 1000000;
 
   await program.rpc.createPool( 
     new anchor.BN(amount_a), 
@@ -158,18 +160,19 @@ create_pool();
 // ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
 // │ (index) │     Property      │                     Value                      │
 // ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ 'DLvHc3XKzjAH4JM4oDTtptgUma7nVi8cUcUrbBt1AU4f' │
+// │    0    │      'Pool'       │ '3m7TjKocGtnMpM6SGwKjKZZ1QmbvsNv5jcMhrQGtYvnq' │
 // │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
 // │    2    │     'A token'     │ '5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ' │
 // │    3    │     'B token'     │ '6hPAQy93EbDzwHyU843zcWKATy8NrJ1ZsKCRi2JkuXcT' │
-// │    4    │    'LP token'     │ '8bceYP2jAbv6YaTgmiokaX4cqqPMXvXAbFBNgTV5YpLJ' │
+// │    4    │    'LP token'     │ '2Um9ZWWvktEa5FcLrrzwv4soQgCjFiVJnx8kWB4gp1J9' │
 // │    5    │ 'A tokenAccount'  │       '11111111111111111111111111111111'       │
 // │    6    │ 'B tokenAccount'  │       '11111111111111111111111111111111'       │
-// │    7    │ 'LP tokenAccount' │ 'F8uLRYWSJrg46F2wq16Wx3H15TFiKUP9JDVVJ2cn49fy' │
+// │    7    │ 'LP tokenAccount' │ '3nankGqeMANshNGBXQfsQaTDmnViFVJyLz3W8GVE2W5h' │
 // │    8    │    'Amount A'     │                1500000000000000                │
 // │    9    │    'Amount B'     │                1500000000000000                │
 // │   10    │       'Amp'       │                      1000                      │
 // │   11    │ 'total LP amount' │                       0                        │
 // │   12    │  'min LP amount'  │                       0                        │
-// │   13    │      'State'      │                       1                        │
+// │   13    │       'fee'       │                       5                        │
+// │   14    │      'State'      │                       1                        │
 // └─────────┴───────────────────┴────────────────────────────────────────────────┘
