@@ -42,8 +42,8 @@ async function findAssociatedTokenAddress(
 
 const swap_pool = async () => {
     
-  const connection = new Connection("http://localhost:8899", "confirmed");
-  // const connection = new Connection("https://api.devnet.solana.com", "confirmed");
+  // const connection = new Connection("http://localhost:8899", "confirmed");
+  const connection = new Connection("https://api.devnet.solana.com", "confirmed");
 
   const userKeypair = getKeypair("user");
 

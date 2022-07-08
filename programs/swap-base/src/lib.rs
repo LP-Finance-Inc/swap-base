@@ -594,6 +594,8 @@ pub mod swap_base {
 
             pool.amount_a += amount_swap;
             pool.amount_b -= amount_return;
+            pool.amount_d = pool.amount_a + pool.amount_b;
+
 
             //---------- Token A Transfer Swaper -> Pool PDA -----------------------------
             let swap_ix_a = spl_token::instruction::transfer(
@@ -647,6 +649,8 @@ pub mod swap_base {
 
             pool.amount_b += amount_swap;
             pool.amount_a -= amount_return;
+            pool.amount_d = pool.amount_a + pool.amount_b;
+
             //---------- Token B Transfer Swaper -> Pool PDA -----------------------------
             let swap_ix_b = spl_token::instruction::transfer(
                 token_program.key,
