@@ -12,6 +12,7 @@ import {
   getPublicKey,
 } from "./utils";
 import { NETWORK } from "../config";
+import { bs58 } from "@project-serum/anchor/dist/cjs/utils/bytes";
 
 const delete_pool = async () => {
     
@@ -24,7 +25,14 @@ const delete_pool = async () => {
   anchor.setProvider(new anchor.AnchorProvider(connection, provider.wallet, anchor.AnchorProvider.defaultOptions()));
   const program = anchor.workspace.SwapBase as Program<SwapBase>;
 
-  const poolAccounts = await program.account.pool.all();
+  const poolAccounts = await program.account.pool.all([
+    {
+      memcmp: {
+        offset: 8,
+        bytes: bs58.encode(Buffer.from('pool')),
+      }
+    }
+  ]);
 
   if (poolAccounts.length > 0){
     await program.rpc.deletePool({
