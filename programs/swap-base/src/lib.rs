@@ -34,6 +34,7 @@ pub mod swap_base {
         let token_acc_lp: &mut Account<TokenAccount> = &mut ctx.accounts.token_acc_lp;
         let token_program:&Program<Token> = &ctx.accounts.token_program;
     
+        pool.title = "pool".to_string();
         pool.creator = *creator.key;
         pool.token_a = token_a.key();
         pool.token_b = token_b.key();
@@ -938,6 +939,7 @@ pub struct SwapPool<'info> {
 
 #[account]
 pub struct Pool {
+    pub title: String,
     pub creator: Pubkey,
     pub token_a: Pubkey,
     pub token_b: Pubkey,
@@ -959,9 +961,11 @@ const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBLIC_KEY_LENGTH: usize = 32;
 const U64_LENGTH: usize = 8;
 const U8_LENGTH: usize =1;
+const TITLE_LENGTH: usize = 4; // Title -> pool
 
 impl Pool {
     const LEN: usize = DISCRIMINATOR_LENGTH
+    + TITLE_LENGTH          //Title
     + PUBLIC_KEY_LENGTH     // creator
     + PUBLIC_KEY_LENGTH     // token_a
     + PUBLIC_KEY_LENGTH     // token_b
