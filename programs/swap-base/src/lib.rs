@@ -710,7 +710,7 @@ pub struct CreatePool<'info> {
     #[account(
         init, 
         payer = creator, 
-        space = Pool::LEN + 8
+        space = Pool::LEN
     )]
     pub pool: Account<'info, Pool>,
     #[account(mut)]
@@ -961,7 +961,7 @@ const DISCRIMINATOR_LENGTH: usize = 8;
 const PUBLIC_KEY_LENGTH: usize = 32;
 const U64_LENGTH: usize = 8;
 const U8_LENGTH: usize =1;
-const TITLE_LENGTH: usize = 4; // Title -> pool
+const TITLE_LENGTH: usize = 4*2; // Title -> pool
 
 impl Pool {
     const LEN: usize = DISCRIMINATOR_LENGTH

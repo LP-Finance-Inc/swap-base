@@ -38,7 +38,7 @@ const get_pools = async () => {
     const poolAccounts = await program.account.pool.all([
       {
         memcmp: {
-          offset: 8,
+          offset: 12,
           bytes: bs58.encode(Buffer.from('pool')),
         }
       }
