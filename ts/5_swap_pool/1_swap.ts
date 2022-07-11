@@ -67,8 +67,8 @@ const swap_pool = async () => {
   const token_acc_a = poolAccount.tokenAccA;
   const token_acc_b = poolAccount.tokenAccB;
 
-  const amount_swap = 1000;
-  const token_swap = poolAccount.tokenA;
+  const amount_swap = 1 * 1e9;
+  const token_swap = poolAccount.tokenB;
 
   const swapProgramId = getProgramId();
   const PDA = await PublicKey.findProgramAddress(
@@ -116,11 +116,11 @@ const swap_pool = async () => {
   list.push({ "Property" : "A tokenAccount", "Value" : poolAccount.tokenAccA.toBase58() });
   list.push({ "Property" : "B tokenAccount", "Value" : poolAccount.tokenAccB.toBase58() });
   list.push({ "Property" : "LP tokenAccount", "Value" : poolAccount.tokenAccLp.toBase58() });
-  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toNumber() });
-  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toNumber() });
-  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
-  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
-  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toString() });
+  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toString() });
+  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toString() });
+  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toString() });
+  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toString() });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
   console.table(list);

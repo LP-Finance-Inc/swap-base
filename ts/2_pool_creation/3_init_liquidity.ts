@@ -65,8 +65,8 @@ const init_liquidity = async () => {
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);
 
-  const amount_a = 1500000 * 1e9 // 1000000;
-  const amount_b = 1500000 * 1e9 // 1000000;
+  const amount_a = 1500000 * 1e9 // "100000000000000000"; // 
+  const amount_b = 1500000 * 1e9 // "100000000000000000"; // 
 
   const creator_pubkey = poolAccount.creator;
   const token_acc_a = poolAccount.tokenAccA;
@@ -110,11 +110,11 @@ const init_liquidity = async () => {
   list.push({ "Property" : "A tokenAccount", "Value" : poolAccount.tokenAccA.toBase58() });
   list.push({ "Property" : "B tokenAccount", "Value" : poolAccount.tokenAccB.toBase58() });
   list.push({ "Property" : "LP tokenAccount", "Value" : poolAccount.tokenAccLp.toBase58() });
-  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toNumber() });
-  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toNumber() });
-  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toNumber() });
-  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toNumber() });
-  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toNumber() });
+  list.push({ "Property" : "Amount A", "Value" : poolAccount.amountA.toString() });
+  list.push({ "Property" : "Amount B", "Value" : poolAccount.amountB.toString() });
+  list.push({ "Property" : "Amp", "Value" : poolAccount.amp.toString() });
+  list.push({ "Property" : "total LP amount", "Value" : poolAccount.totalLpAmount.toString() });
+  list.push({ "Property" : "min LP amount", "Value" : poolAccount.minLpAmount.toString() });
   list.push({ "Property" : "fee", "Value" : poolAccount.fee });
   list.push({ "Property" : "State", "Value" : poolAccount.state });
   
@@ -123,54 +123,3 @@ const init_liquidity = async () => {
 };
 
 init_liquidity();
-
-// 2022-07-06 devnet
-
-// creator_ata_a :  A9iZCZVCBPXT855c792AUp5VhTp2jX2kcmBH26LZnYJq
-// creator_ata_b :  J4NkF1qF8rkaxJsLkmuGbVh9dvJHBsAQAPSWGCd6nFio
-// 1.Transfer A Token: Creator -> Pool PDA
-// 2.Transfer B Token: Creator -> Pool PDA
-// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
-// │ (index) │     Property      │                     Value                      │
-// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ '4sMLjhYZyPJvkDrxdXTAfWm2C9EFbkhK7VjKtniDpnkw' │
-// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
-// │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
-// │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
-// │    4    │    'LP token'     │ '5NMGQBUqQG8oXmXQziBVfenhvKXBwA5AGveHAMffYGsQ' │
-// │    5    │ 'A tokenAccount'  │ 'FjCvFfYu4q9phZJd6FUbh9V9SHjvXGVViyfoY3W3fLK4' │
-// │    6    │ 'B tokenAccount'  │ '8dsGfyRDxy6BgJWsM15gFosjPwaSiLDzDusRCgWQjp7f' │
-// │    7    │ 'LP tokenAccount' │ '8eyP5g1QqbmKv6Y9s9JMtYd1FWSHRKhT1hZFzKeTsvca' │
-// │    8    │    'Amount A'     │                   100000000                    │
-// │    9    │    'Amount B'     │                   100000000                    │
-// │   10    │       'Amp'       │                      1000                      │
-// │   11    │ 'total LP amount' │                       0                        │
-// │   12    │  'min LP amount'  │                       0                        │
-// │   13    │      'State'      │                       3                        │
-// └─────────┴───────────────────┴────────────────────────────────────────────────┘
-
-
-// 2022-0708 devnet
-// LpSOL-wSOL
-// creator_ata_a :  EXKi1Bd7tJhGfwRqXTaVwdvBjrreL4uzJQBHQLtK98Xj
-// creator_ata_b :  8KVEhqLbeEzJEpqNbAMARWUC6fsn5eWKB41Fmubgtahw
-// 1.Transfer A Token: Creator -> Pool PDA
-// 2.Transfer B Token: Creator -> Pool PDA
-// ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
-// │ (index) │     Property      │                     Value                      │
-// ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ 'DLvHc3XKzjAH4JM4oDTtptgUma7nVi8cUcUrbBt1AU4f' │
-// │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
-// │    2    │     'A token'     │ '5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ' │
-// │    3    │     'B token'     │ '6hPAQy93EbDzwHyU843zcWKATy8NrJ1ZsKCRi2JkuXcT' │
-// │    4    │    'LP token'     │ '8bceYP2jAbv6YaTgmiokaX4cqqPMXvXAbFBNgTV5YpLJ' │
-// │    5    │ 'A tokenAccount'  │ 'BSYUoSQDTWrixr4ZCp752e3gh1c6ibuzjEQcfZVGE8HV' │
-// │    6    │ 'B tokenAccount'  │ 'DFRHJM21LQXch4Z4tk8mRo82dVtAnxQzMAtToqWbuFD'  │
-// │    7    │ 'LP tokenAccount' │ 'F8uLRYWSJrg46F2wq16Wx3H15TFiKUP9JDVVJ2cn49fy' │
-// │    8    │    'Amount A'     │                1500000000000000                │
-// │    9    │    'Amount B'     │                1500000000000000                │
-// │   10    │       'Amp'       │                      1000                      │
-// │   11    │ 'total LP amount' │                       0                        │
-// │   12    │  'min LP amount'  │                       0                        │
-// │   13    │      'State'      │                       3                        │
-// └─────────┴───────────────────┴────────────────────────────────────────────────┘

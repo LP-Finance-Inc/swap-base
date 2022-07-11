@@ -35,27 +35,27 @@ const get_pools = async () => {
   
   const poolAccounts = await program.account.pool.all();
 
-  console.log("Get existing Pool completed!");
+  console.log("Get existing Pool completed!", poolAccounts);
 
-  const len = poolAccounts.length;
-  console.log("Pool amount : ", len);
+  // const len = poolAccounts.length;
+  // console.log("Pool amount : ", len);
 
-  let list = []
-  for (let i=0; i<len; i++){
-    list.push({
-        "pubkey" : poolAccounts[i].publicKey.toBase58(),
-        "creator": poolAccounts[i].account.creator.toBase58().substring(0,5) + '...',
-        "token1" : poolAccounts[i].account.tokenA.toBase58().substring(0,5) + '...',
-        "amount1": poolAccounts[i].account.amountA.toString(),
-        "token2" : poolAccounts[i].account.tokenB.toBase58().substring(0,5) + '...',
-        "amount2": poolAccounts[i].account.amountB.toString(),
-        "amp": poolAccounts[i].account.amp.toString(),
-        "fee": poolAccounts[i].account.fee,
-        "state": poolAccounts[i].account.state
-    })
-  }
+  // let list = []
+  // for (let i=0; i<len; i++){
+  //   list.push({
+  //       "pubkey" : poolAccounts[i].publicKey.toBase58(),
+  //       "creator": poolAccounts[i].account.creator.toBase58().substring(0,5) + '...',
+  //       "token1" : poolAccounts[i].account.tokenA.toBase58().substring(0,5) + '...',
+  //       "amount1": poolAccounts[i].account.amountA.toString(),
+  //       "token2" : poolAccounts[i].account.tokenB.toBase58().substring(0,5) + '...',
+  //       "amount2": poolAccounts[i].account.amountB.toString(),
+  //       "amp": poolAccounts[i].account.amp.toString(),
+  //       "fee": poolAccounts[i].account.fee,
+  //       "state": poolAccounts[i].account.state
+  //   })
+  // }
 
-  console.table(list);
+  // console.table(list);
 
 };
 
