@@ -710,7 +710,7 @@ pub struct CreatePool<'info> {
     #[account(
         init, 
         payer = creator, 
-        space = Pool::LEN
+        space = Pool::LEN + 8
     )]
     pub pool: Account<'info, Pool>,
     #[account(mut)]
