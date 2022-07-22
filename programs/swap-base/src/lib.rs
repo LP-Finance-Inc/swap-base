@@ -938,6 +938,7 @@ pub struct SwapPool<'info> {
 }
 
 #[account]
+#[derive(Default)]
 pub struct Pool {
     pub title: String,
     pub creator: Pubkey,
@@ -981,6 +982,24 @@ impl Pool {
     + U64_LENGTH            // min_lp_amount
     + U8_LENGTH            // pool state
     + U8_LENGTH;            // pool fee
+
+
+    // swap rate of Lptoken -> quote token
+    pub fn get_swap_rate(&self, amount_swap: u64) -> Result<u64> {
+        let amp_f = self.amp as f64;
+        let d_f = self.amount_d as f64;
+        let amount_a_f = (self.amount_a + amount_swap) as f64;
+
+        let a: f64 = 16.0 * amp_f * amount_a_f;
+        let b: f64 = 16.0 * amp_f * amount_a_f * amount_a_f - 4.0 * d_f * (4.0 * amp_f - 1.0 ) * amount_a_f;
+        let c: f64 = -1.0 * d_f * d_f * d_f;
+
+        let amount_b_f: f64 = (-1.0*b+(b*b-4.0*a*c).sqrt())/2.0/a;
+        let amount_return_f =self.amount_b as f64 - amount_b_f;
+        let amount_return = (amount_return_f * (100.0 - self.fee as f64 / 10.0) / 100.0) as u64;
+
+        Ok( amount_return )
+    }   
 }
 
 #[error_code]

@@ -55,10 +55,10 @@ const get_pools = async () => {
           "pubkey" : poolAccounts[i].publicKey.toBase58(),
           "creator": poolAccounts[i].account.creator.toBase58().substring(0,5) + '...',
           "token1" : poolAccounts[i].account.tokenA.toBase58().substring(0,5) + '...',
-          "amount1": poolAccounts[i].account.amountA.toNumber(),
+          "amount1": poolAccounts[i].account.amountA.toString(),
           "token2" : poolAccounts[i].account.tokenB.toBase58().substring(0,5) + '...',
-          "amount2": poolAccounts[i].account.amountB.toNumber(),
-          "amp": poolAccounts[i].account.amp.toNumber(),
+          "amount2": poolAccounts[i].account.amountB.toString(),
+          "amp": poolAccounts[i].account.amp.toString(),
           "fee": poolAccounts[i].account.fee,
           "state": poolAccounts[i].account.state
       })

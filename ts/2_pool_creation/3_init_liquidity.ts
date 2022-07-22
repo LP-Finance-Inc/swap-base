@@ -55,18 +55,18 @@ const init_liquidity = async () => {
 
   const pool_pubkey = await getPublicKey("pool");
 
-  // const ata_creator_a = await getATAPublicKey(LpUSDMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
-  const ata_creator_a = await getATAPublicKey(LpSOLMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
+  const ata_creator_a = await getATAPublicKey(LpUSDMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
+  // const ata_creator_a = await getATAPublicKey(LpSOLMint, creatorKeypair.publicKey); // getPublicKey("ata_creator_a");
   console.log("creator_ata_a : ", ata_creator_a.toBase58());
 
-  // const ata_creator_b = await getATAPublicKey(USDCMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
-  const ata_creator_b = await getATAPublicKey(wSOLMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
+  const ata_creator_b = await getATAPublicKey(USDCMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
+  // const ata_creator_b = await getATAPublicKey(wSOLMint, creatorKeypair.publicKey) // getPublicKey("ata_creator_b");
   console.log("creator_ata_b : ", ata_creator_b.toBase58());
 
   let poolAccount = await program.account.pool.fetch(pool_pubkey);
 
-  const amount_a = 1500000 * 1e9 // "100000000000000000"; // 
-  const amount_b = 1500000 * 1e9 // "100000000000000000"; // 
+  const amount_a = "100000000000000000"; // 1500000 * 1e9 // 
+  const amount_b = "100000000000000000"; // 1500000 * 1e9 // 
 
   const creator_pubkey = poolAccount.creator;
   const token_acc_a = poolAccount.tokenAccA;

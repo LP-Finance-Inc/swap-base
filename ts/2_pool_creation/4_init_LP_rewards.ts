@@ -71,7 +71,8 @@ const init_LP_rewards = async () => {
     [Buffer.from("swap-pool-pda")],
     swapProgramId
   );
-
+  
+  console.log(PDA[0].toBase58());
   await program.rpc.initLpRewards( 
     "swap-pool-pda", 
     PDA[1], 
@@ -130,21 +131,21 @@ init_LP_rewards();
 
 
 // 2022-0706 LpUSD-USDC devnet
-// ata creator LP: Ee27zA6ioSReNmBRxg9VQhV1qSppoPBCr1f5KadmKMv3
+// ata creator LP: CNxLr5PR8hpKrMHmC6vX3wkv3KPk9Hnjp3ea7W2scZXm
 // 1.Create new LP TokenAccount of Creator.
 // 2.Calc Amount of LP Token rewards
 // 3.Transfer LP Token rewards: Pool PDA -> Creator
 // ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
 // │ (index) │     Property      │                     Value                      │
 // ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ '5GHmFbyrG4ToG8bFmd8yeSVu6sGDcLGed9FAAUNWnaRB' │
+// │    0    │      'Pool'       │ '4Mcu9CJj8EPtsijxtwqo5kpPJSmzyeTZKE7Won5Q6iyL' │
 // │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
 // │    2    │     'A token'     │ '3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL' │
 // │    3    │     'B token'     │ '6ybV587PY2z6DX4Pf1tTh8oEhnuR6wwXLE8LHinKQKYV' │
-// │    4    │    'LP token'     │ 'AemYz4gAS9X6pXvajADryPh9SyYN47KQdQGvxC3QyLYc' │
-// │    5    │ 'A tokenAccount'  │ '7Uego1uo8XNvvhmCW5EvPFw3xnbCRKM6SaGT9ysEt813' │
-// │    6    │ 'B tokenAccount'  │ '4Q5H3o5U2KdLhvMErEMoG8woceEXSbnCafM7vwdfMp7F' │
-// │    7    │ 'LP tokenAccount' │ '4MR29bimJJaxwZmuXA8fjJtiCxsKMyQRjHJGBPqVENuN' │
+// │    4    │    'LP token'     │ 'DS4nZSEme92W77pYp1pmWXvZfyLt17uzoYm1Q7isPF2B' │
+// │    5    │ 'A tokenAccount'  │ 'A7hyuLEdBFAD6uCPatCRywT1XRpXJjXFmwDDng89HZzB' │
+// │    6    │ 'B tokenAccount'  │ 'FNTkSm3LRe6ZWx34hvwBzUqJavKpkvAEkw2zTJxsTtp'  │
+// │    7    │ 'LP tokenAccount' │ '7girYuka921K7StyrHXgZRPhYnqGgvMLQTRCi9YxVE9d' │
 // │    8    │    'Amount A'     │              '100000000000000000'              │
 // │    9    │    'Amount B'     │              '100000000000000000'              │
 // │   10    │       'Amp'       │                     '1000'                     │
@@ -157,14 +158,13 @@ init_LP_rewards();
 // 2022-0708 devnet
 // LpSOL-wSOL
 
-// ata creator LP: 5DRqGf4QQoMbTnp6WY6jEPEeVFkTJsACUN6xFDsWaTuT
 // 1.Create new LP TokenAccount of Creator.
 // 2.Calc Amount of LP Token rewards
 // 3.Transfer LP Token rewards: Pool PDA -> Creator
 // ┌─────────┬───────────────────┬────────────────────────────────────────────────┐
 // │ (index) │     Property      │                     Value                      │
 // ├─────────┼───────────────────┼────────────────────────────────────────────────┤
-// │    0    │      'Pool'       │ 'G8xc7w5rLBUbonXMBn8qrAUrRJtP7VQeyQHChXGbfhFz' │
+// │    0    │      'Pool'       │ 'Hi9bZiEgdto5gHdMNfcZxHe1SZh63ifnD3HJEyWhcgKF' │
 // │    1    │     'Creator'     │ 'AZzscKGxcnS25oyvcLWoYWAQPE4uv4pycXR8ANq1HkmD' │
 // │    2    │     'A token'     │ '5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ' │
 // │    3    │     'B token'     │ '6hPAQy93EbDzwHyU843zcWKATy8NrJ1ZsKCRi2JkuXcT' │

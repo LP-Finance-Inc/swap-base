@@ -30,10 +30,10 @@ const create_pool = async () => {
   const poolKeypair = anchor.web3.Keypair.generate();
   writePublicKey(poolKeypair.publicKey, `pool`); 
   
-  // const token_mint_a = LpUSDMint; // await getPublicKey("mint_a");
-  // const token_mint_b = USDCMint; // await getPublicKey("mint_b");
-  const token_mint_a = LpSOLMint; // await getPublicKey("mint_a");
-  const token_mint_b = wSOLMint; // await getPublicKey("mint_b");
+  const token_mint_a = LpUSDMint; // await getPublicKey("mint_a");
+  const token_mint_b = USDCMint; // await getPublicKey("mint_b");
+  // const token_mint_a = LpSOLMint; // await getPublicKey("mint_a");
+  // const token_mint_b = wSOLMint; // await getPublicKey("mint_b");
 
   const token_mint_lp = anchor.web3.Keypair.generate();
 
@@ -49,8 +49,8 @@ const create_pool = async () => {
 
   const token_acc_lp_Keypair = anchor.web3.Keypair.generate();
 
-  const amount_a = 1500000 * 1e9 // "100000000000000000" // ;
-  const amount_b = 1500000 * 1e9// "100000000000000000" // ;
+  const amount_a = "100000000000000000" // 1500000 * 1e9 // 
+  const amount_b = "100000000000000000" // 1500000 * 1e9// 
 
   await program.rpc.createPool( 
     new anchor.BN(amount_a), 
