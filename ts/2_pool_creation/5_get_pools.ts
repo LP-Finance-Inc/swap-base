@@ -51,6 +51,12 @@ const get_pools = async () => {
   
     let list = []
     for (let i=0; i<len; i++){
+
+      console.log(poolAccounts[i].account.tokenAccA.toString())
+      console.log(poolAccounts[i].account.tokenAccB.toString())
+      console.log(poolAccounts[i].account.tokenAccLp.toString())
+      console.log(poolAccounts[i].account.tokenLp.toString())
+
       list.push({
           "pubkey" : poolAccounts[i].publicKey.toBase58(),
           "creator": poolAccounts[i].account.creator.toBase58().substring(0,5) + '...',

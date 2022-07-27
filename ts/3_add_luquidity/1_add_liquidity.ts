@@ -68,8 +68,8 @@ const add_liquidity = async () => {
   const pool_amount_a = parseFloat(poolAccount.amountA.toString());
   const pool_amount_b = parseFloat(poolAccount.amountB.toString());
 
-  const amount_a = "99999998900000010";
-  const amount_b = "99999998900000010"; // pool_amount_b/(pool_amount_a)* amount_a;
+  const amount_a = "100000000000";
+  const amount_b = "100000000000"; // pool_amount_b/(pool_amount_a)* amount_a;
   console.log("amount a:", amount_a);
   console.log("amount b:", amount_b);
 
