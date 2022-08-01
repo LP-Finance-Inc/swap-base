@@ -1,7 +1,7 @@
 import { PublicKey } from "@solana/web3.js";
 
 
-export const NETWORK = "https://api.devnet.solana.com";
+export const NETWORK = "https://api.devnet.solana.com"; // "https://api.mainnet-beta.solana.com"; // 
 
 export const LpSOLMint = new PublicKey("5jmsfTrYxWSKgrZp4Y8cziTWvt7rqmTCiJ75FbLqFTVZ")
 export const LpUSDMint = new PublicKey("3GB97goPSqywzcXybmVurYW7jSxRdGuS28nj74W8fAtL")
